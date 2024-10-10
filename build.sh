@@ -13,7 +13,10 @@ echo n | ship --vm create freebsd-vm-base --source "$LATEST_IMAGE"
 sed -i '/<\/devices>/i \
   <console type="pty">\
     <target type="virtio"/>\
-  </console>' "$XML_FILE"
+  </console>\
+  <serial type="pty">\
+    <target port="0"/>\
+  </serial>' "$XML_FILE"
 
 virsh -c qemu:///system undefine freebsd-vm-base
 virsh -c qemu:///system define "$XML_FILE"
