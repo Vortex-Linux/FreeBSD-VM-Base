@@ -4,7 +4,7 @@ SCRIPT_PATH="$(readlink -f "$0")"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 XML_FILE="/tmp/freebsd-vm-base.xml"
 
-LATEST_IMAGE=$(lynx -dump -listonly -nonumbers https://bsd-cloud-image.org | grep freebsd | grep zfs | sort -V | tail -n 1)
+LATEST_IMAGE=$(lynx -dump -listonly -nonumbers https://download.freebsd.org/releases/VM-IMAGES | tail -n 2 | head -n 1 | xargs lynx -dump -listonly -nonumbers | grep amd64 | sed 's|$|Latest|' | xargs lynx -dump -listonly -nonumbers | sort -V | grep -v CLOUDINIT | grep zfs | grep qcow)
 
 echo y | ship --vm delete freebsd-vm-base 
 
